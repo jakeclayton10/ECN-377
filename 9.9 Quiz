@@ -1,0 +1,125 @@
+# ============================================================================
+# STATISTICS QUIZ CHEAT SHEET - R Commands
+# ============================================================================
+# For calculation questions, modify the values and run the command to get answers
+# Round to hundredths as needed
+
+# ============================================================================
+# CONCEPTUAL QUESTIONS (Q1-Q7)
+# ============================================================================
+
+# Q1: Sample variance divides by n-1 ✓
+# Q2: var(x) computes sample variance ✓
+# Q3: cor(x, y) computes correlation ✓
+# Q4: Correlation is between -1 and 1 ✓
+# Q5: E[X] = sum of each value times its probability ✓
+# Q6: E[X^2] = sum of each squared value times its probability ✓
+# Q7: sd(x) gives SAMPLE standard deviation (divides by n-1) ✓
+
+# ============================================================================
+# CALCULATION QUESTIONS
+# ============================================================================
+
+# --- Q8: Sample Mean ---
+# Formula: mean(x) = (1/n) * sum(x_i)
+x <- c(1, 4, 11)
+mean(x)
+# Expected: 5.33
+
+# --- Q9: Sample Variance ---
+# Formula: var(x) = (1/(n-1)) * sum((x_i - mean)^2)
+x <- c(9, 5, 5)
+var(x)
+# Expected: 5.33
+
+# --- Q10: Sample Standard Deviation ---
+# Formula: sd(x) = sqrt(var(x))
+x <- c(7, 2, 4)
+sd(x)
+# Expected: 2.52
+
+# --- Q11: Sample Covariance ---
+# Formula: cov(x, y) = (1/(n-1)) * sum((x_i - mean(x)) * (y_i - mean(y)))
+x <- c(2, 4, 1)
+y <- c(6, 6, 3)
+cov(x, y)
+# Expected: 2
+
+# --- Q12: Sample Correlation from Statistics ---
+# Formula: cor = cov(x,y) / (sd(x) * sd(y))
+S_xy <- -4
+S_x <- 4
+S_y <- 4
+rho <- S_xy / (S_x * S_y)
+round(rho, 2)
+# Expected: -0.25
+
+# --- Q13: Sample Correlation Directly from Data ---
+# Formula: cor(x, y) - correlation coefficient
+x <- c(2, 6, 1)
+y <- c(5, 8, 5)
+cor(x, y)
+# Expected: 0.98
+
+# ============================================================================
+# EXPECTED VALUE QUESTIONS (Q14-Q21)
+# ============================================================================
+
+# --- Q14: Expected Value for Fair Coin (2 on heads, 0 on tails) ---
+# E[X] = sum(value * probability)
+values <- c(2, 0)
+probs <- c(0.5, 0.5)
+E_X <- sum(values * probs)
+round(E_X, 2)
+# Expected: 1
+
+# --- Q15: E[X^2] for Fair Coin (7 on heads, 9 on tails) ---
+# E[X^2] = sum(value^2 * probability)
+values <- c(7, 9)
+probs <- c(0.5, 0.5)
+E_X2 <- sum(values^2 * probs)
+round(E_X2, 2)
+# Expected: 65
+
+# --- Q16: E[X] with values 4, 3, 4 (each prob 1/3) ---
+values <- c(4, 3, 4)
+probs <- c(1/3, 1/3, 1/3)
+E_X <- sum(values * probs)
+round(E_X, 2)
+# Expected: 3.67
+
+# --- Q17: E[X^2] with values 6, 0, 7 (each prob 1/3) ---
+values <- c(6, 0, 7)
+probs <- c(1/3, 1/3, 1/3)
+E_X2 <- sum(values^2 * probs)
+round(E_X2, 2)
+# Expected: 28.33
+
+# --- Q18: E[X] with value 10 (prob 4/10), value 1 (prob 6/10) ---
+values <- c(10, 1)
+probs <- c(4/10, 6/10)
+E_X <- sum(values * probs)
+round(E_X, 2)
+# Expected: 4.6
+
+# --- Q19: E[X^2] with value 10 (prob 1/10), value 10 (prob 9/10) ---
+# NOTE: This seems like both values are 10, so E[X^2] = 100
+values <- c(10, 10)
+probs <- c(1/10, 9/10)
+E_X2 <- sum(values^2 * probs)
+round(E_X2, 2)
+# Expected: 100
+
+# --- Q20: E[X] with values 6, 9, 5 and probs 0.2, 0.5, 0.3 ---
+values <- c(6, 9, 5)
+probs <- c(0.2, 0.5, 0.3)
+E_X <- sum(values * probs)
+round(E_X, 2)
+# Expected: 7.2
+
+# --- Q21: E[X^2] with values 1, 4, 3 and probs 0.2, 0.5, 0.3 ---
+values <- c(1, 4, 3)
+probs <- c(0.2, 0.5, 0.3)
+E_X2 <- sum(values^2 * probs)
+round(E_X2, 2)
+# Expected: 10.9
