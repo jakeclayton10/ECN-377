@@ -1,0 +1,258 @@
+# ============================================================================
+# QUIZ 8 - PROBLEM SETS 8 & 9 - PLUG AND PLAY SCRIPT
+# ============================================================================
+# For each plug-and-play question:
+# 1. Original question with exact numbers (to verify your answer)
+# 2. Template with variables you can modify
+# ============================================================================
+
+# ============================================================================
+# PROBLEM SET 8 - LOG TRANSFORMATIONS
+# ============================================================================
+
+# ============================================================================
+# Q14: SCALING X (Dividing by constant)
+# ============================================================================
+# ORIGINAL QUESTION:
+# "In a regression of y on x, the OLS slope is β̂₁ = 0.59.
+#  Every value of x is then divided by 1,000. What is the new OLS slope?"
+# ANSWER: 590
+
+# Original calculation:
+original_slope <- 0.59
+divisor <- 1000
+new_slope_original <- original_slope * divisor
+round(new_slope_original, 2)
+# Result: 590
+
+# PLUG AND PLAY TEMPLATE:
+# Edit these values:
+original_slope <- 0.59      # Change this
+divisor <- 1000            # Change this
+# New slope = original_slope * (1/divisor_factor) = original_slope * multiplier
+multiplier <- 1 / divisor
+new_slope <- original_slope / multiplier
+round(new_slope, 2)
+# Expected: 590
+
+cat("---\n")
+
+# ============================================================================
+# Q17: LOG-LEVEL ELASTICITY
+# ============================================================================
+# ORIGINAL QUESTION:
+# "A log-level regression gives log(ŷ) = 0.6 + 0.07x.
+#  By about what percent does y change when x rises by 3?"
+# ANSWER: 21
+
+# Original calculation:
+beta_1_original <- 0.07
+delta_x_original <- 3
+pct_change_original <- 100 * beta_1_original * delta_x_original
+round(pct_change_original, 2)
+# Result: 21
+
+# PLUG AND PLAY TEMPLATE:
+# Edit these values:
+beta_1 <- 0.07             # Change this (coefficient on x)
+delta_x <- 3               # Change this (change in x)
+pct_change <- 100 * beta_1 * delta_x
+round(pct_change, 2)
+# Expected: 21
+
+cat("---\n")
+
+# ============================================================================
+# Q19: LEVEL-LOG INTERPRETATION
+# ============================================================================
+# ORIGINAL QUESTION:
+# "A level-log regression gives ŷ = 129 + 35.7*log(x).
+#  By about how many units does y change when x rises by 13%?"
+# ANSWER: 4.64
+
+# Original calculation:
+beta_1_original <- 35.7
+pct_x_change_original <- 13
+delta_y_original <- (beta_1_original / 100) * pct_x_change_original
+round(delta_y_original, 2)
+# Result: 4.64
+
+# PLUG AND PLAY TEMPLATE:
+# Edit these values:
+beta_1 <- 35.7             # Change this (coefficient on log(x))
+pct_x_change <- 13         # Change this (percent change in x)
+delta_y <- (beta_1 / 100) * pct_x_change
+round(delta_y, 2)
+# Expected: 4.64
+
+cat("---\n")
+
+# ============================================================================
+# PROBLEM SET 9 - STATISTICAL INFERENCE
+# ============================================================================
+
+# Q1: CONCEPTUAL (Log-log scaling)
+# When log(salary) is the dependent variable and salary is multiplied by 1000,
+# the intercept changes but the SLOPE does not change.
+# Answer: β̂₁ does not change; only β̂₀ changes.
+
+# Q9: CONCEPTUAL (Omitted variable bias)
+# Ability omitted from wage equation causes omitted variable bias because:
+# - Ability raises wages (correlated with Y)
+# - Ability is higher for educated people (correlated with X = educ)
+# Answer: The worker's ability
+
+# Q13: CONCEPTUAL (Variance of slope)
+# Var(β̂₁) = σ² / SST_X
+# More spread-out X values = larger SST_X = smaller Var(β̂₁)
+# Answer: More spread-out values of X (larger SST_X)
+
+cat("---\n")
+
+# ============================================================================
+# Q5: LOG-LOG ELASTICITY (Negative change)
+# ============================================================================
+# ORIGINAL QUESTION:
+# "A log-log regression gives log(ŷ) = 2.1 + 0.58*log(x).
+#  By about what percent does y change when x falls by 7%?"
+# ANSWER: -4.06
+
+# Original calculation:
+beta_1_original <- 0.58
+pct_x_change_original <- -7  # Negative because x falls
+pct_y_change_original <- beta_1_original * pct_x_change_original
+round(pct_y_change_original, 2)
+# Result: -4.06
+
+# PLUG AND PLAY TEMPLATE:
+# Edit these values:
+beta_1 <- 0.58             # Change this (elasticity coefficient)
+pct_x_change <- -7         # Change this (can be positive or negative)
+pct_y_change <- beta_1 * pct_x_change
+round(pct_y_change, 2)
+# Expected: -4.06
+
+cat("---\n")
+
+# ============================================================================
+# Q14: STANDARD DEVIATION OF SLOPE ESTIMATOR
+# ============================================================================
+# ORIGINAL QUESTION:
+# "Under SLR1–SLR5, the error standard deviation is σ = 2.
+#  A sample has X values x = (1, 7, 8, 9, 10).
+#  Find sd(β̂₁)."
+# ANSWER: 0.28
+
+# Formula: sd(β̂₁) = σ / sqrt(SST_X)
+# SST_X = Σ(x_i - x̄)²
+
+# Original calculation:
+sigma <- 2
+x_original <- c(1, 7, 8, 9, 10)
+x_bar <- mean(x_original)
+SST_X <- sum((x_original - x_bar)^2)
+sd_beta_1_original <- sigma / sqrt(SST_X)
+round(sd_beta_1_original, 2)
+# Result: 0.28
+
+# PLUG AND PLAY TEMPLATE:
+# Edit these values:
+sigma <- 2                 # Change this (error SD)
+x <- c(1, 7, 8, 9, 10)    # Change this (X values)
+x_bar <- mean(x)
+SST_X <- sum((x - x_bar)^2)
+sd_beta_1 <- sigma / sqrt(SST_X)
+round(sd_beta_1, 2)
+# Expected: 0.28
+
+cat("---\n")
+
+# ============================================================================
+# Q15: ERROR VARIANCE ESTIMATION
+# ============================================================================
+# ORIGINAL QUESTION:
+# "A simple regression on n = 13 observations has SSR = 740.
+#  Find the estimate of the error variance, σ̂²."
+# ANSWER: 67.27
+
+# Formula: σ̂² = SSR / (n - 2)
+
+# Original calculation:
+n_original <- 13
+SSR_original <- 740
+sigma_squared_original <- SSR_original / (n_original - 2)
+round(sigma_squared_original, 2)
+# Result: 67.27
+
+# PLUG AND PLAY TEMPLATE:
+# Edit these values:
+n <- 13                    # Change this (sample size)
+SSR <- 740                 # Change this (sum of squared residuals)
+sigma_squared <- SSR / (n - 2)
+round(sigma_squared, 2)
+# Expected: 67.27
+
+cat("---\n")
+
+# ============================================================================
+# Q16: STANDARD ERROR OF SLOPE
+# ============================================================================
+# ORIGINAL QUESTION:
+# "A simple regression on n = 10 observations has SSR = 804
+#  and SST_X = 28. Find the standard error se(β̂₁)."
+# ANSWER: 1.89
+
+# Formula: se(β̂₁) = sqrt(σ̂²) / sqrt(SST_X)
+#          where σ̂² = SSR / (n - 2)
+
+# Original calculation:
+n_original <- 10
+SSR_original <- 804
+SST_X_original <- 28
+sigma_squared_original <- SSR_original / (n_original - 2)
+se_beta_1_original <- sqrt(sigma_squared_original) / sqrt(SST_X_original)
+round(se_beta_1_original, 2)
+# Result: 1.89
+
+# PLUG AND PLAY TEMPLATE:
+# Edit these values:
+n <- 10                    # Change this (sample size)
+SSR <- 804                 # Change this (sum of squared residuals)
+SST_X <- 28                # Change this (sum of squared X deviations)
+sigma_squared <- SSR / (n - 2)
+se_beta_1 <- sqrt(sigma_squared) / sqrt(SST_X)
+round(se_beta_1, 2)
+# Expected: 1.89
+
+# ============================================================================
+# Q6: REQUIRES DATASET
+# ============================================================================
+# "Data: ceosal1. Run lm(log(salary) ~ roe, data = ceosal1).
+#  By about what percent does predicted salary change when
+#  return on equity rises by 5 points?"
+#
+# Steps:
+# 1. Load data: data(ceosal1)  [from wooldridge or similar package]
+# 2. Run: reg <- lm(log(salary) ~ roe, data = ceosal1)
+# 3. Extract coefficient: beta_1 <- coef(reg)[2]
+# 4. Calculate: pct_change = 100 * beta_1 * delta_roe
+# Expected: 13.94
+
+# Template:
+# data(ceosal1)
+# reg <- lm(log(salary) ~ roe, data = ceosal1)
+# beta_1 <- coef(reg)[2]
+# delta_roe <- 5
+# pct_change <- 100 * beta_1 * delta_roe
+# round(pct_change, 2)
+
+# ============================================================================
+# KEY FORMULAS
+# ============================================================================
+# Scaling x by factor c: new_slope = old_slope / c
+# Log-level elasticity: %Δy ≈ 100 * β₁ * Δx
+# Level-log interpretation: Δy ≈ (β₁/100) * %Δx
+# Log-log elasticity: %Δy ≈ β₁ * %Δx
+# sd(β̂₁) = σ / sqrt(SST_X)
+# σ̂² = SSR / (n - 2)
+# se(β̂₁) = sqrt(σ̂²) / sqrt(SST_X) = sqrt(SSR/(n-2)) / sqrt(SST_X)
