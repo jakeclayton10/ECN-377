@@ -1,0 +1,173 @@
+# =====================================================================
+#  QUIZ 9 CALCULATOR  (practice problems #1-4, 6, 7, 9, 12-15)
+#  How to use: find the question, change the numbers / names in the
+#  "PLUG IN" lines, then select that block and run it (Ctrl/Cmd+Enter).
+#  Every answer prints already rounded to the hundredths.
+# =====================================================================
+
+if (!require(wooldridge)) install.packages("wooldridge")
+library(wooldridge)
+
+r2 <- function(label, x) cat(label, "=", format(round(x, 2), nsmall = 2), "\n")
+
+
+# ---------------------------------------------------------------------
+# #1  INTERPRET A SLOPE (which functional form is it?)
+#     Run this block to print the right sentence for any slope b.
+#
+#     level-level  y ~ x           : $1 / 1-unit rise in x -> y changes b UNITS
+#     level-log    y ~ log(x)      : 1% rise in x -> y changes b/100 UNITS
+#     log-level    log(y) ~ x      : 1-unit rise in x -> y changes 100*b PERCENT
+#     log-log      log(y) ~ log(x) : 1% rise in x -> y changes b PERCENT
+#
+#     Practice version: test score = 12 + 8 log(income) is level-log, so
+#     ANSWER: "A 1% rise in income ... rise of about 0.08 points."
+# ---------------------------------------------------------------------
+b1_q1    <- 8             # PLUG IN the slope
+form_q1  <- "level-log"   # PLUG IN "level-level", "level-log", "log-level", or "log-log"
+
+if (form_q1 == "level-level") cat("Q1 ANSWER: 1-unit rise in x ->", b1_q1, "unit change in y\n")
+if (form_q1 == "level-log")   cat("Q1 ANSWER: 1% rise in x ->", b1_q1 / 100, "unit change in y\n")
+if (form_q1 == "log-level")   cat("Q1 ANSWER: 1-unit rise in x ->", 100 * b1_q1, "% change in y\n")
+if (form_q1 == "log-log")     cat("Q1 ANSWER: 1% rise in x ->", b1_q1, "% change in y\n")
+
+
+# ---------------------------------------------------------------------
+# #2  LOG-LEVEL: % change in y when x changes by some amount
+#     log(y) = b0 + b1*x  ->  %dY ~ 100 * b1 * dX
+#     A FALL in x means dX is NEGATIVE (type the minus sign).
+# ---------------------------------------------------------------------
+b1_q2 <- 0.05    # PLUG IN slope on x
+dx_q2 <- -3      # PLUG IN change in x (falls by 3 -> -3)
+
+r2("Q2 ANSWER: % change in y", 100 * b1_q2 * dx_q2)
+# Exact version (only if they ask for it): 100 * (exp(b1_q2 * dx_q2) - 1)
+
+
+# ---------------------------------------------------------------------
+# #3  LOG-LOG: % change in Y when X rises by some %
+#     lm(log(y) ~ log(x)) -> %dY ~ b1 * %dX
+# ---------------------------------------------------------------------
+dat3   <- bwght        # PLUG IN dataset
+y3     <- "bwght"      # PLUG IN Y variable
+x3     <- "faminc"     # PLUG IN X variable
+pct_x3 <- 20           # PLUG IN % rise in X (20 for 20%)
+
+reg3 <- lm(as.formula(paste0("log(", y3, ") ~ log(", x3, ")")), data = dat3)
+b3   <- coef(reg3)[2]
+cat("Q3 slope (elasticity) =", round(b3, 4), "\n")
+r2("Q3 ANSWER: % change in Y", b3 * pct_x3)
+
+# Other functional forms, in case the quiz swaps it:
+#   log-level  lm(log(y) ~ x):  %dY = 100 * b1 * dX
+#   level-log  lm(y ~ log(x)):  dY  = (b1/100) * %dX
+#   level-level lm(y ~ x):      dY  = b1 * dX
+
+
+# ---------------------------------------------------------------------
+# #4  CONCEPT: 1,000 samples, OLS unbiased (SLR1-SLR4)
+#     ANSWER: "The average of the 1,000 estimates is close to beta1."
+#     (Unbiased = right ON AVERAGE. Each estimate still varies; Var > 0.)
+# ---------------------------------------------------------------------
+
+
+# ---------------------------------------------------------------------
+# #6  CONCEPT: what makes Var(b1) = sigma^2 / SST_X LARGER? (select all)
+#     YES: smaller sample (smaller SST_X)
+#     YES: larger error variance sigma^2
+#     YES: X bunched tightly together (smaller SST_X)
+#     NO : larger sample, larger true slope beta1 (beta1 not in formula)
+#     If the quiz asks what makes it SMALLER, flip it: bigger n,
+#     smaller sigma^2, X more spread out.
+# ---------------------------------------------------------------------
+
+
+# ---------------------------------------------------------------------
+# #7  se(b1) from sigma-hat, n and the STANDARD DEVIATION of X
+#     SST_X = (n-1) * S_X^2 ;  se = sigma_hat / sqrt(SST_X)
+# ---------------------------------------------------------------------
+n7     <- 8      # PLUG IN n
+sig7   <- 2.1    # PLUG IN sigma-hat
+sdX7   <- 0.7    # PLUG IN S_X (standard deviation of X)
+
+sst7 <- (n7 - 1) * sdX7^2
+r2("Q7 SST_X", sst7)
+r2("Q7 ANSWER: se(b1)", sig7 / sqrt(sst7))
+# If they give the VARIANCE of X instead, use sst7 <- (n7 - 1) * varX
+# If they give SSR instead of sigma-hat, use sig7 <- sqrt(SSR / (n7 - 2))
+
+
+# ---------------------------------------------------------------------
+# #9  sd(b1) when the sample (and SST_X) gets k times as large
+#     new sd = old sd / sqrt(k)
+# ---------------------------------------------------------------------
+sd9 <- 0.38    # PLUG IN current sd(b1)
+k9  <- 16      # PLUG IN "k times as large"
+
+r2("Q9 ANSWER: new sd(b1)", sd9 / sqrt(k9))
+# If sigma doubles instead, sd doubles. If SST_X shrinks by k, multiply by sqrt(k).
+
+
+# ---------------------------------------------------------------------
+# #12  Predicted y-hat from a multiple regression
+#      y-hat = b0 + b1*x1 + b2*x2 (+ ...)
+# ---------------------------------------------------------------------
+b12 <- c(7, 1.2, 1.3)   # PLUG IN c(intercept, b1, b2, ...)
+x12 <- c(7, 3)          # PLUG IN c(x1, x2, ...)
+
+r2("Q12 ANSWER: y-hat", b12[1] + sum(b12[-1] * x12))
+
+
+# ---------------------------------------------------------------------
+# #13  Change in y-hat when several x's change
+#      dy-hat = b1*dx1 + b2*dx2 (intercept doesn't matter)
+#      Type negative slopes WITH the minus sign.
+# ---------------------------------------------------------------------
+slopes13 <- c(0.9, -2.4)   # PLUG IN c(b1, b2, ...)  (no intercept)
+dx13     <- c(6, 5)        # PLUG IN c(change in x1, change in x2, ...)
+
+r2("Q13 ANSWER: change in y-hat", sum(slopes13 * dx13))
+
+
+# ---------------------------------------------------------------------
+# #14  Predicted value from a real dataset regression
+# ---------------------------------------------------------------------
+dat14 <- wage1                                  # PLUG IN dataset
+f14   <- wage ~ educ + exper + tenure           # PLUG IN formula
+new14 <- data.frame(educ = 14, exper = 10, tenure = 5)  # PLUG IN values
+
+reg14 <- lm(f14, data = dat14)
+print(round(coef(reg14), 4))
+r2("Q14 ANSWER: predicted Y", predict(reg14, newdata = new14))
+# If Y is log(something) and they want the level, wrap it:
+#   exp(predict(reg14, newdata = new14))
+
+
+# ---------------------------------------------------------------------
+# #15  Change in predicted Y when ONE variable changes, others fixed
+#      dY = b_var * dvar
+# ---------------------------------------------------------------------
+dat15 <- wage1                          # PLUG IN dataset
+f15   <- wage ~ educ + exper + tenure   # PLUG IN formula
+var15 <- "tenure"                       # PLUG IN the variable that changes
+dx15  <- 3                              # PLUG IN how much it changes
+
+reg15 <- lm(f15, data = dat15)
+cat("Q15 coefficient on", var15, "=", round(coef(reg15)[var15], 4), "\n")
+r2("Q15 ANSWER: change in predicted Y", coef(reg15)[var15] * dx15)
+# If Y is log(y), the % change is 100 * coef * dx15.
+
+
+# ---------------------------------------------------------------------
+# EXTRA  General regression tools (n, SSR, sigma-hat, R-squared, std. errors)
+# ---------------------------------------------------------------------
+datG <- wage1          # PLUG IN dataset
+fG   <- wage ~ educ    # PLUG IN formula
+
+regG <- lm(fG, data = datG)
+print(summary(regG))           # coefficients, Std. Error, R-squared
+nG    <- nobs(regG)
+ssrG  <- sum(resid(regG)^2)
+sigG  <- sqrt(ssrG / (nG - length(coef(regG))))
+r2("n", nG); r2("SSR", ssrG); r2("sigma-hat", sigG)
+r2("R-squared", summary(regG)$r.squared)
